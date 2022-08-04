@@ -1,0 +1,17 @@
+{
+  "name": "workflow-clock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "inquirer": "^9.0.2",
+    "octokit": "^2.0.4"
+  }
+}
