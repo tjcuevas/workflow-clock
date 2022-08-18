@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "type": "module",
+  "bin": "./bin.js",
   "dependencies": {
     "date-fns": "^2.29.1",
     "dotenv": "^16.0.1",
