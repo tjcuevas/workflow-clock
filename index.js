@@ -2,6 +2,7 @@ import { Octokit, App } from "octokit";
 import fs from "fs";
 import inquirer from 'inquirer';
 import 'dotenv/config';
+import { formatISO, sub } from 'date-fns';
 
 const octokit = new Octokit({
   auth: process.env.GH_AUTH_TOKEN,
@@ -33,10 +34,14 @@ const getInteractiveSettings = async () => {
 		name: 'getWorkflow',
 		message: 'Which workflow?',
 		choices: workflows.data.workflows.map(w => w.name)
+	},{
+		type: 'input',
+		name: 'getDate',
+		message: 'How many days back would you like to go?'
 	}]);
 
 	settings.workflowId = workflows.data.workflows.find(w => w.name === workflowAnswer.getWorkflow).id;
-
+	settings.startDate =  formatISO(sub(Date.now(), { days: +workflowAnswer.getDate}), { representation: 'date' });
 	return settings;
 };
 
@@ -48,7 +53,7 @@ const result = await octokit.paginate(
     owner: settings.owner,
     repo: settings.repository,
     workflow_id: settings.workflowId,
-    created: ">=2022-07-04",
+    created: `>=${settings.startDate}`,
     status: "success",
   }
 );
